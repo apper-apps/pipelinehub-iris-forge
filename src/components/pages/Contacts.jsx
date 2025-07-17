@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ContactTable from "@/components/organisms/ContactTable";
 import ContactForm from "@/components/organisms/ContactForm";
+import FilterBuilder from "@/components/organisms/FilterBuilder";
+import SavedFilters from "@/components/organisms/SavedFilters";
 import SearchBar from "@/components/molecules/SearchBar";
 import Button from "@/components/atoms/Button";
 import Loading from "@/components/ui/Loading";
@@ -19,6 +21,9 @@ const Contacts = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingContact, setEditingContact] = useState(null);
   const [selectedContact, setSelectedContact] = useState(null);
+  const [showFilterBuilder, setShowFilterBuilder] = useState(false);
+  const [showSavedFilters, setShowSavedFilters] = useState(false);
+  const [activeFilter, setActiveFilter] = useState(null);
 
   const loadContacts = async () => {
     try {
@@ -38,18 +43,33 @@ const Contacts = () => {
     loadContacts();
   }, []);
 
-  useEffect(() => {
+useEffect(() => {
+    applyFilters();
+  }, [searchTerm, contacts, activeFilter]);
+
+  const applyFilters = async () => {
+    let filtered = [...contacts];
+
+    // Apply search filter
     if (searchTerm) {
-      const filtered = contacts.filter(contact =>
+      filtered = filtered.filter(contact =>
         contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         contact.company.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFilteredContacts(filtered);
-    } else {
-      setFilteredContacts(contacts);
     }
-  }, [searchTerm, contacts]);
+
+    // Apply advanced filter
+    if (activeFilter && activeFilter.conditions) {
+      try {
+        filtered = await contactService.filterContacts(filtered, activeFilter.conditions);
+      } catch (error) {
+        toast.error('Failed to apply filter');
+      }
+    }
+
+    setFilteredContacts(filtered);
+  };
 
   const handleAddContact = () => {
     setEditingContact(null);
@@ -87,6 +107,34 @@ const handleSaveContact = async (contactData) => {
         toast.error("Failed to delete contact");
       }
     }
+};
+
+  const handleShowFilterBuilder = () => {
+    setShowFilterBuilder(true);
+  };
+
+  const handleShowSavedFilters = () => {
+    setShowSavedFilters(true);
+  };
+
+  const handleApplyFilter = (filter) => {
+    setActiveFilter(filter);
+    setShowFilterBuilder(false);
+    setShowSavedFilters(false);
+    toast.success('Filter applied successfully');
+  };
+
+  const handleClearFilter = () => {
+    setActiveFilter(null);
+    toast.info('Filter cleared');
+  };
+
+  const handleCloseFilterBuilder = () => {
+    setShowFilterBuilder(false);
+  };
+
+  const handleCloseSavedFilters = () => {
+    setShowSavedFilters(false);
   };
 
   if (loading) {
@@ -124,7 +172,7 @@ return (
           </Button>
         </div>
 
-        <div className="flex items-center space-x-4">
+<div className="flex items-center space-x-4">
           <SearchBar
             placeholder="Search contacts..."
             value={searchTerm}
@@ -133,16 +181,64 @@ return (
           />
           
           <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleShowFilterBuilder}
+            >
               <ApperIcon name="Filter" size={16} className="mr-2" />
-              Filter
+              Advanced Filter
             </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleShowSavedFilters}
+            >
+              <ApperIcon name="Bookmark" size={16} className="mr-2" />
+              Saved Filters
+            </Button>
+            {activeFilter && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleClearFilter}
+                className="text-red-600 hover:text-red-700"
+              >
+                <ApperIcon name="X" size={16} className="mr-2" />
+                Clear Filter
+              </Button>
+            )}
             <Button variant="outline" size="sm">
               <ApperIcon name="Download" size={16} className="mr-2" />
               Export
             </Button>
           </div>
-        </div>
+</div>
+
+        {/* Active Filter Display */}
+        {activeFilter && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <ApperIcon name="Filter" size={16} className="text-blue-600" />
+                <span className="text-sm font-medium text-blue-800">
+                  Active Filter: {activeFilter.name || 'Custom Filter'}
+                </span>
+                <span className="text-xs text-blue-600">
+                  ({activeFilter.conditions.length} condition{activeFilter.conditions.length !== 1 ? 's' : ''})
+                </span>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleClearFilter}
+                className="text-blue-600 hover:text-blue-700"
+              >
+                <ApperIcon name="X" size={14} />
+              </Button>
+            </div>
+          </div>
+        )}
 
         {filteredContacts.length === 0 ? (
           <Empty
@@ -175,6 +271,45 @@ return (
               onCancel={handleModalClose}
               className="shadow-2xl"
             />
+          </div>
+        </div>
+)}
+
+      {/* Filter Builder Modal */}
+      {showFilterBuilder && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <FilterBuilder
+              type="contacts"
+              onApply={handleApplyFilter}
+              onCancel={handleCloseFilterBuilder}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Saved Filters Modal */}
+      {showSavedFilters && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div className="bg-white rounded-lg shadow-xl p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-display font-bold text-gray-900">
+                  Saved Filters
+                </h2>
+                <Button
+                  variant="outline"
+                  onClick={handleCloseSavedFilters}
+                  className="p-2"
+                >
+                  <ApperIcon name="X" size={16} />
+                </Button>
+              </div>
+              <SavedFilters
+                type="contacts"
+                onApply={handleApplyFilter}
+              />
+            </div>
           </div>
         </div>
       )}

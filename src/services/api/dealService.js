@@ -74,4 +74,67 @@ export const dealService = {
     await delay(200);
     return deals.filter(deal => deal.stage === stage);
   },
+async filterDeals(deals, conditions) {
+    await delay(250);
+    
+    return deals.filter(deal => {
+      return conditions.every(condition => {
+        const { field, operator, value } = condition;
+        const fieldValue = deal[field];
+        
+        if (fieldValue === undefined || fieldValue === null) {
+          return false;
+        }
+        
+        switch (operator) {
+          case 'equals':
+            return fieldValue.toString().toLowerCase() === value.toLowerCase();
+          case 'not_equals':
+            return fieldValue.toString().toLowerCase() !== value.toLowerCase();
+          case 'contains':
+            return fieldValue.toString().toLowerCase().includes(value.toLowerCase());
+          case 'not_contains':
+            return !fieldValue.toString().toLowerCase().includes(value.toLowerCase());
+          case 'starts_with':
+            return fieldValue.toString().toLowerCase().startsWith(value.toLowerCase());
+          case 'ends_with':
+            return fieldValue.toString().toLowerCase().endsWith(value.toLowerCase());
+          case 'greater':
+            return parseFloat(fieldValue) > parseFloat(value);
+          case 'less':
+            return parseFloat(fieldValue) < parseFloat(value);
+          case 'between':
+            const [min, max] = value.split(',').map(v => parseFloat(v.trim()));
+            return parseFloat(fieldValue) >= min && parseFloat(fieldValue) <= max;
+          case 'after':
+            return new Date(fieldValue) > new Date(value);
+          case 'before':
+            return new Date(fieldValue) < new Date(value);
+          case 'today':
+            const today = new Date();
+            const dealDate = new Date(fieldValue);
+            return dealDate.toDateString() === today.toDateString();
+          case 'this_week':
+            const weekStart = new Date();
+            weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+            const weekEnd = new Date();
+            weekEnd.setDate(weekEnd.getDate() + (6 - weekEnd.getDay()));
+            const dealDateWeek = new Date(fieldValue);
+            return dealDateWeek >= weekStart && dealDateWeek <= weekEnd;
+          case 'this_month':
+            const monthStart = new Date();
+            monthStart.setDate(1);
+            const monthEnd = new Date();
+            monthEnd.setMonth(monthEnd.getMonth() + 1);
+            monthEnd.setDate(0);
+            const dealDateMonth = new Date(fieldValue);
+            return dealDateMonth >= monthStart && dealDateMonth <= monthEnd;
+          case 'in':
+            return value.split(',').map(v => v.trim().toLowerCase()).includes(fieldValue.toString().toLowerCase());
+          default:
+            return true;
+        }
+      });
+    });
+  },
 };

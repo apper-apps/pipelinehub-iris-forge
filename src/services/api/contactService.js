@@ -71,4 +71,64 @@ async create(contactData) {
       contact.company.toLowerCase().includes(searchTerm)
     );
   },
+async filterContacts(contacts, conditions) {
+    await delay(250);
+    
+    return contacts.filter(contact => {
+      return conditions.every(condition => {
+        const { field, operator, value } = condition;
+        const fieldValue = contact[field];
+        
+        if (fieldValue === undefined || fieldValue === null) {
+          return false;
+        }
+        
+        switch (operator) {
+          case 'equals':
+            return fieldValue.toString().toLowerCase() === value.toLowerCase();
+          case 'not_equals':
+            return fieldValue.toString().toLowerCase() !== value.toLowerCase();
+          case 'contains':
+            return fieldValue.toString().toLowerCase().includes(value.toLowerCase());
+          case 'not_contains':
+            return !fieldValue.toString().toLowerCase().includes(value.toLowerCase());
+          case 'starts_with':
+            return fieldValue.toString().toLowerCase().startsWith(value.toLowerCase());
+          case 'ends_with':
+            return fieldValue.toString().toLowerCase().endsWith(value.toLowerCase());
+          case 'greater':
+            return parseFloat(fieldValue) > parseFloat(value);
+          case 'less':
+            return parseFloat(fieldValue) < parseFloat(value);
+          case 'after':
+            return new Date(fieldValue) > new Date(value);
+          case 'before':
+            return new Date(fieldValue) < new Date(value);
+          case 'today':
+            const today = new Date();
+            const contactDate = new Date(fieldValue);
+            return contactDate.toDateString() === today.toDateString();
+          case 'this_week':
+            const weekStart = new Date();
+            weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+            const weekEnd = new Date();
+            weekEnd.setDate(weekEnd.getDate() + (6 - weekEnd.getDay()));
+            const contactDateWeek = new Date(fieldValue);
+            return contactDateWeek >= weekStart && contactDateWeek <= weekEnd;
+          case 'this_month':
+            const monthStart = new Date();
+            monthStart.setDate(1);
+            const monthEnd = new Date();
+            monthEnd.setMonth(monthEnd.getMonth() + 1);
+            monthEnd.setDate(0);
+            const contactDateMonth = new Date(fieldValue);
+            return contactDateMonth >= monthStart && contactDateMonth <= monthEnd;
+          case 'in':
+            return value.split(',').map(v => v.trim().toLowerCase()).includes(fieldValue.toString().toLowerCase());
+          default:
+            return true;
+        }
+      });
+    });
+  },
 };
