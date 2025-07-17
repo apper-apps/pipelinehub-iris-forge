@@ -1,0 +1,82 @@
+[
+  {
+    "Id": 1,
+    "name": "Sarah Johnson",
+    "email": "sarah.johnson@techcorp.com",
+    "phone": "+1 (555) 123-4567",
+    "company": "TechCorp Solutions",
+    "status": "qualified",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "lastActivity": "2024-01-20T14:22:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "Michael Chen",
+    "email": "m.chen@innovate.io",
+    "phone": "+1 (555) 234-5678",
+    "company": "Innovate Labs",
+    "status": "contacted",
+    "createdAt": "2024-01-16T09:15:00Z",
+    "lastActivity": "2024-01-19T11:45:00Z"
+  },
+  {
+    "Id": 3,
+    "name": "Emily Rodriguez",
+    "email": "emily.r@startupventures.com",
+    "phone": "+1 (555) 345-6789",
+    "company": "Startup Ventures",
+    "status": "new",
+    "createdAt": "2024-01-17T16:20:00Z",
+    "lastActivity": "2024-01-18T09:30:00Z"
+  },
+  {
+    "Id": 4,
+    "name": "David Thompson",
+    "email": "david.thompson@globaltech.com",
+    "phone": "+1 (555) 456-7890",
+    "company": "Global Tech Industries",
+    "status": "qualified",
+    "createdAt": "2024-01-14T13:45:00Z",
+    "lastActivity": "2024-01-21T16:10:00Z"
+  },
+  {
+    "Id": 5,
+    "name": "Lisa Wang",
+    "email": "lisa.wang@digitalfuture.com",
+    "phone": "+1 (555) 567-8901",
+    "company": "Digital Future Co.",
+    "status": "contacted",
+    "createdAt": "2024-01-12T11:20:00Z",
+    "lastActivity": "2024-01-20T08:15:00Z"
+  },
+  {
+    "Id": 6,
+    "name": "Robert Martinez",
+    "email": "robert.m@cloudservices.net",
+    "phone": "+1 (555) 678-9012",
+    "company": "Cloud Services Ltd",
+    "status": "lost",
+    "createdAt": "2024-01-10T14:30:00Z",
+    "lastActivity": "2024-01-15T12:00:00Z"
+  },
+  {
+    "Id": 7,
+    "name": "Jennifer Adams",
+    "email": "j.adams@dataanalytics.com",
+    "phone": "+1 (555) 789-0123",
+    "company": "Data Analytics Pro",
+    "status": "new",
+    "createdAt": "2024-01-18T10:15:00Z",
+    "lastActivity": "2024-01-19T15:30:00Z"
+  },
+  {
+    "Id": 8,
+    "name": "Thomas Wilson",
+    "email": "thomas.wilson@cybersecurity.org",
+    "phone": "+1 (555) 890-1234",
+    "company": "CyberSecurity Plus",
+    "status": "qualified",
+    "createdAt": "2024-01-13T15:45:00Z",
+    "lastActivity": "2024-01-22T10:20:00Z"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "Id": 1,
+    "title": "Follow up on Enterprise Software proposal",
+    "description": "Schedule a demo call with the decision makers at TechCorp",
+    "dueDate": "2024-01-25T14:00:00Z",
+    "status": "pending",
+    "contactId": 1,
+    "assignedTo": "Sales Team"
+  },
+  {
+    "Id": 2,
+    "title": "Prepare Cloud Migration presentation",
+    "description": "Create detailed presentation covering migration timeline and costs",
+    "dueDate": "2024-01-28T10:00:00Z",
+    "status": "pending",
+    "contactId": 2,
+    "assignedTo": "Technical Team"
+  },
+  {
+    "Id": 3,
+    "title": "Send digital transformation proposal",
+    "description": "Draft and send comprehensive proposal to Startup Ventures",
+    "dueDate": "2024-01-30T16:00:00Z",
+    "status": "pending",
+    "contactId": 3,
+    "assignedTo": "Sales Team"
+  },
+  {
+    "Id": 4,
+    "title": "Complete security audit documentation",
+    "description": "Finalize and deliver security audit report to Global Tech",
+    "dueDate": "2024-01-26T12:00:00Z",
+    "status": "completed",
+    "contactId": 4,
+    "assignedTo": "Security Team"
+  },
+  {
+    "Id": 5,
+    "title": "Review contract terms with Legal",
+    "description": "Go over data analytics platform contract with legal team",
+    "dueDate": "2024-01-27T15:00:00Z",
+    "status": "pending",
+    "contactId": 5,
+    "assignedTo": "Legal Team"
+  },
+  {
+    "Id": 6,
+    "title": "Conduct post-mortem analysis",
+    "description": "Analyze why the Cloud Services deal was lost",
+    "dueDate": "2024-01-29T11:00:00Z",
+    "status": "completed",
+    "contactId": 6,
+    "assignedTo": "Sales Team"
+  },
+  {
+    "Id": 7,
+    "title": "Research AI integration requirements",
+    "description": "Gather technical requirements for AI integration project",
+    "dueDate": "2024-02-01T09:00:00Z",
+    "status": "pending",
+    "contactId": 7,
+    "assignedTo": "Technical Team"
+  },
+  {
+    "Id": 8,
+    "title": "Schedule cybersecurity training consultation",
+    "description": "Book initial consultation call with CyberSecurity Plus",
+    "dueDate": "2024-02-02T14:00:00Z",
+    "status": "pending",
+    "contactId": 8,
+    "assignedTo": "Training Team"
+  }
+]

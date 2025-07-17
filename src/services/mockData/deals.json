@@ -1,0 +1,82 @@
+[
+  {
+    "Id": 1,
+    "title": "Enterprise Software License",
+    "value": 75000,
+    "stage": "negotiation",
+    "contactId": 1,
+    "probability": 80,
+    "closeDate": "2024-02-15T00:00:00Z",
+    "createdAt": "2024-01-15T10:30:00Z"
+  },
+  {
+    "Id": 2,
+    "title": "Cloud Migration Project",
+    "value": 120000,
+    "stage": "proposal",
+    "contactId": 2,
+    "probability": 60,
+    "closeDate": "2024-03-01T00:00:00Z",
+    "createdAt": "2024-01-16T09:15:00Z"
+  },
+  {
+    "Id": 3,
+    "title": "Digital Transformation Consulting",
+    "value": 45000,
+    "stage": "prospecting",
+    "contactId": 3,
+    "probability": 30,
+    "closeDate": "2024-04-10T00:00:00Z",
+    "createdAt": "2024-01-17T16:20:00Z"
+  },
+  {
+    "Id": 4,
+    "title": "Security Audit Services",
+    "value": 25000,
+    "stage": "closed-won",
+    "contactId": 4,
+    "probability": 100,
+    "closeDate": "2024-01-25T00:00:00Z",
+    "createdAt": "2024-01-14T13:45:00Z"
+  },
+  {
+    "Id": 5,
+    "title": "Data Analytics Platform",
+    "value": 90000,
+    "stage": "negotiation",
+    "contactId": 5,
+    "probability": 75,
+    "closeDate": "2024-02-28T00:00:00Z",
+    "createdAt": "2024-01-12T11:20:00Z"
+  },
+  {
+    "Id": 6,
+    "title": "Custom Development Project",
+    "value": 35000,
+    "stage": "closed-lost",
+    "contactId": 6,
+    "probability": 0,
+    "closeDate": "2024-01-20T00:00:00Z",
+    "createdAt": "2024-01-10T14:30:00Z"
+  },
+  {
+    "Id": 7,
+    "title": "AI Integration Services",
+    "value": 65000,
+    "stage": "proposal",
+    "contactId": 7,
+    "probability": 50,
+    "closeDate": "2024-03-15T00:00:00Z",
+    "createdAt": "2024-01-18T10:15:00Z"
+  },
+  {
+    "Id": 8,
+    "title": "Cybersecurity Training Program",
+    "value": 15000,
+    "stage": "prospecting",
+    "contactId": 8,
+    "probability": 40,
+    "closeDate": "2024-05-01T00:00:00Z",
+    "createdAt": "2024-01-13T15:45:00Z"
+  }
+]

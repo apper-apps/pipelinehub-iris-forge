@@ -1,0 +1,112 @@
+[
+  {
+    "Id": 1,
+    "type": "email",
+    "description": "Sent proposal for Enterprise Software License to Sarah Johnson",
+    "contactId": 1,
+    "timestamp": "2024-01-22T10:30:00Z",
+    "metadata": {
+      "subject": "Enterprise Software License Proposal",
+      "status": "sent"
+    }
+  },
+  {
+    "Id": 2,
+    "type": "call",
+    "description": "Discovery call with Michael Chen about Cloud Migration needs",
+    "contactId": 2,
+    "timestamp": "2024-01-21T14:15:00Z",
+    "metadata": {
+      "duration": "45 minutes",
+      "outcome": "positive"
+    }
+  },
+  {
+    "Id": 3,
+    "type": "meeting",
+    "description": "Initial consultation meeting with Emily Rodriguez",
+    "contactId": 3,
+    "timestamp": "2024-01-20T16:00:00Z",
+    "metadata": {
+      "location": "Office",
+      "attendees": 3
+    }
+  },
+  {
+    "Id": 4,
+    "type": "email",
+    "description": "Contract signed and returned by David Thompson",
+    "contactId": 4,
+    "timestamp": "2024-01-19T09:45:00Z",
+    "metadata": {
+      "subject": "Signed Security Audit Contract",
+      "status": "received"
+    }
+  },
+  {
+    "Id": 5,
+    "type": "call",
+    "description": "Negotiation call with Lisa Wang regarding pricing",
+    "contactId": 5,
+    "timestamp": "2024-01-18T11:20:00Z",
+    "metadata": {
+      "duration": "30 minutes",
+      "outcome": "negotiating"
+    }
+  },
+  {
+    "Id": 6,
+    "type": "note",
+    "description": "Robert Martinez decided to go with competitor solution",
+    "contactId": 6,
+    "timestamp": "2024-01-17T15:30:00Z",
+    "metadata": {
+      "category": "deal_lost",
+      "reason": "pricing"
+    }
+  },
+  {
+    "Id": 7,
+    "type": "email",
+    "description": "Sent technical requirements questionnaire to Jennifer Adams",
+    "contactId": 7,
+    "timestamp": "2024-01-16T13:10:00Z",
+    "metadata": {
+      "subject": "AI Integration Requirements",
+      "status": "sent"
+    }
+  },
+  {
+    "Id": 8,
+    "type": "meeting",
+    "description": "Demo scheduled with Thomas Wilson for next week",
+    "contactId": 8,
+    "timestamp": "2024-01-15T10:00:00Z",
+    "metadata": {
+      "location": "Virtual",
+      "scheduled_for": "2024-01-22T14:00:00Z"
+    }
+  },
+  {
+    "Id": 9,
+    "type": "call",
+    "description": "Follow-up call with Sarah Johnson about implementation timeline",
+    "contactId": 1,
+    "timestamp": "2024-01-14T16:45:00Z",
+    "metadata": {
+      "duration": "20 minutes",
+      "outcome": "positive"
+    }
+  },
+  {
+    "Id": 10,
+    "type": "task",
+    "description": "Completed technical assessment for Michael Chen's project",
+    "contactId": 2,
+    "timestamp": "2024-01-13T12:30:00Z",
+    "metadata": {
+      "task_type": "assessment",
+      "status": "completed"
+    }
+  }
+]
