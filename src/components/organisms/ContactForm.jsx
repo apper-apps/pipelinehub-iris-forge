@@ -5,12 +5,13 @@ import FormField from "@/components/molecules/FormField";
 import { toast } from "react-toastify";
 
 const ContactForm = ({ contact, onSave, onCancel, className }) => {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     name: contact?.name || "",
     email: contact?.email || "",
     phone: contact?.phone || "",
     company: contact?.company || "",
     status: contact?.status || "new",
+    notes: contact?.notes || "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,7 +48,7 @@ const ContactForm = ({ contact, onSave, onCancel, className }) => {
     }
   };
 
-  return (
+return (
     <div className={cn("bg-white rounded-lg shadow-lg border border-gray-200", className)}>
       <div className="p-6 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900">
@@ -85,7 +86,7 @@ const ContactForm = ({ contact, onSave, onCancel, className }) => {
             onChange={(e) => handleChange("company", e.target.value)}
           />
           
-          <FormField
+<FormField
             label="Status"
             type="select"
             value={formData.status}
@@ -98,6 +99,14 @@ const ContactForm = ({ contact, onSave, onCancel, className }) => {
           </FormField>
         </div>
         
+        <FormField
+          label="Notes"
+          type="textarea"
+          value={formData.notes}
+          onChange={(e) => handleChange("notes", e.target.value)}
+          placeholder="Add any additional notes or comments..."
+          className="min-h-[100px]"
+        />
         <div className="flex justify-end space-x-3">
           <Button
             type="button"

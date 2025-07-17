@@ -20,13 +20,14 @@ export const contactService = {
     return { ...contact };
   },
 
-  async create(contactData) {
+async create(contactData) {
     await delay(400);
     const newContact = {
       ...contactData,
       Id: Math.max(...contacts.map(c => c.Id)) + 1,
       createdAt: new Date().toISOString(),
       lastActivity: new Date().toISOString(),
+      notes: contactData.notes || "",
     };
     contacts.push(newContact);
     return { ...newContact };

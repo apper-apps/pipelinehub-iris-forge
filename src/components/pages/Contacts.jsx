@@ -103,67 +103,84 @@ const handleSaveContact = async (contactData) => {
     );
   }
 
-  if (showForm) {
-    return (
-      <ContactForm
-        contact={editingContact}
-        onSave={handleSaveContact}
-        onCancel={() => {
-          setShowForm(false);
-          setEditingContact(null);
-        }}
-      />
-    );
-  }
+const handleModalClose = () => {
+    setShowForm(false);
+    setEditingContact(null);
+  };
 
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-display font-bold text-gray-900">Contacts</h1>
-        <Button onClick={handleAddContact}>
-          <ApperIcon name="Plus" size={16} className="mr-2" />
-          Add Contact
-        </Button>
-      </div>
-
-      <div className="flex items-center space-x-4">
-        <SearchBar
-          placeholder="Search contacts..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-1 max-w-md"
-        />
-        
-        <div className="flex items-center space-x-2">
-          <Button variant="outline" size="sm">
-            <ApperIcon name="Filter" size={16} className="mr-2" />
-            Filter
-          </Button>
-          <Button variant="outline" size="sm">
-            <ApperIcon name="Download" size={16} className="mr-2" />
-            Export
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleModalClose();
+    }
+  };
+return (
+    <>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-display font-bold text-gray-900">Contacts</h1>
+          <Button onClick={handleAddContact}>
+            <ApperIcon name="Plus" size={16} className="mr-2" />
+            Add Contact
           </Button>
         </div>
+
+        <div className="flex items-center space-x-4">
+          <SearchBar
+            placeholder="Search contacts..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="flex-1 max-w-md"
+          />
+          
+          <div className="flex items-center space-x-2">
+            <Button variant="outline" size="sm">
+              <ApperIcon name="Filter" size={16} className="mr-2" />
+              Filter
+            </Button>
+            <Button variant="outline" size="sm">
+              <ApperIcon name="Download" size={16} className="mr-2" />
+              Export
+            </Button>
+          </div>
+        </div>
+
+        {filteredContacts.length === 0 ? (
+          <Empty
+            title="No contacts found"
+            message={searchTerm ? "No contacts match your search criteria." : "Get started by adding your first contact."}
+            icon="Users"
+            actionLabel="Add Contact"
+            onAction={handleAddContact}
+          />
+        ) : (
+          <ContactTable
+            contacts={filteredContacts}
+            onEdit={handleEditContact}
+            onDelete={handleDeleteContact}
+            onView={handleViewContact}
+          />
+        )}
       </div>
 
-      {filteredContacts.length === 0 ? (
-        <Empty
-          title="No contacts found"
-          message={searchTerm ? "No contacts match your search criteria." : "Get started by adding your first contact."}
-          icon="Users"
-          actionLabel="Add Contact"
-          onAction={handleAddContact}
-        />
-      ) : (
-        <ContactTable
-          contacts={filteredContacts}
-          onEdit={handleEditContact}
-          onDelete={handleDeleteContact}
-          onView={handleViewContact}
-        />
+      {/* Contact Form Modal */}
+      {showForm && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={handleBackdropClick}
+        >
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <ContactForm
+              contact={editingContact}
+              onSave={handleSaveContact}
+              onCancel={handleModalClose}
+              className="shadow-2xl"
+            />
+          </div>
+        </div>
       )}
-    </div>
+    </>
   );
+
 };
 
 export default Contacts;
