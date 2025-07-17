@@ -21,7 +21,7 @@ const ContactTable = ({ contacts, onEdit, onDelete, onView, className }) => {
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contact) => (
+{contacts.map((contact) => (
               <tr key={contact.Id} className="border-b border-gray-100 hover:bg-gray-50">
                 <td className="p-4">
                   <div className="flex items-center space-x-3">
@@ -29,7 +29,7 @@ const ContactTable = ({ contacts, onEdit, onDelete, onView, className }) => {
                       <ApperIcon name="User" size={16} className="text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">{contact.name}</p>
+                      <p className="font-medium text-gray-900">{contact.Name}</p>
                       <p className="text-sm text-gray-500">{contact.phone}</p>
                     </div>
                   </div>

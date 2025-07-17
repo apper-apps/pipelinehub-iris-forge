@@ -52,14 +52,14 @@ useEffect(() => {
   const applyFilters = async () => {
     let filtered = [...contacts];
 
-    // Apply search filter
-    if (searchTerm) {
-      filtered = filtered.filter(contact =>
-        contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.company.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
+// Apply search filter
+        if (searchTerm) {
+          filtered = filtered.filter(contact =>
+            contact.Name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            contact.company.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
 
     // Apply advanced filter
     if (activeFilter && activeFilter.conditions) {
