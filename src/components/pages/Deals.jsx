@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import FilterBuilder from "@/components/organisms/FilterBuilder";
-import SavedFilters from "@/components/organisms/SavedFilters";
 import { toast } from "react-toastify";
 import ApperIcon from "@/components/ApperIcon";
 import Empty from "@/components/ui/Empty";
 import Error from "@/components/ui/Error";
 import Loading from "@/components/ui/Loading";
 import DealPipeline from "@/components/organisms/DealPipeline";
+import FilterBuilder from "@/components/organisms/FilterBuilder";
 import DealForm from "@/components/organisms/DealForm";
+import SavedFilters from "@/components/organisms/SavedFilters";
 import Button from "@/components/atoms/Button";
 import { dealService } from "@/services/api/dealService";
 import { contactService } from "@/services/api/contactService";
@@ -97,15 +97,21 @@ setDeals(dealsData);
   };
 
 const handleSaveDeal = async (dealData) => {
-    if (editingDeal) {
-      const updatedDeal = await dealService.update(editingDeal.Id, dealData);
-      setDeals(prev => prev.map(d => d.Id === updatedDeal.Id ? updatedDeal : d));
-    } else {
-      const newDeal = await dealService.create(dealData);
-      setDeals(prev => [...prev, newDeal]);
+    try {
+      if (editingDeal) {
+        const updatedDeal = await dealService.update(editingDeal.Id, dealData);
+        setDeals(prev => prev.map(d => d.Id === updatedDeal.Id ? updatedDeal : d));
+        toast.success("Deal updated successfully");
+      } else {
+        const newDeal = await dealService.create(dealData);
+        setDeals(prev => [...prev, newDeal]);
+        toast.success("Deal created successfully");
+      }
+      setShowForm(false);
+      setEditingDeal(null);
+    } catch (error) {
+      toast.error(error.message || "Failed to save deal");
     }
-    setShowForm(false);
-    setEditingDeal(null);
   };
 
   const handleModalClose = () => {
@@ -137,7 +143,7 @@ const handleSaveDeal = async (dealData) => {
       return;
     }
 
-    try {
+try {
       await dealService.updateStage(draggedDeal.Id, newStage);
       setDeals(prev => prev.map(deal => 
         deal.Id === draggedDeal.Id 
@@ -146,13 +152,13 @@ const handleSaveDeal = async (dealData) => {
       ));
       toast.success("Deal stage updated successfully");
     } catch (err) {
-      toast.error("Failed to update deal stage");
+      toast.error(err.message || "Failed to update deal stage");
     } finally {
       setDraggedDeal(null);
     }
   };
 const calculateTotalValue = () => {
-    return filteredDeals.reduce((total, deal) => total + deal.value, 0);
+    return filteredDeals.reduce((total, deal) => total + (deal?.value || 0), 0);
   };
 
   const handleShowFilterBuilder = () => {
@@ -257,8 +263,8 @@ const calculateTotalValue = () => {
               <span className="text-sm font-medium text-blue-800">
                 Active Filter: {activeFilter.name || 'Custom Filter'}
               </span>
-              <span className="text-xs text-blue-600">
-                ({activeFilter.conditions.length} condition{activeFilter.conditions.length !== 1 ? 's' : ''})
+<span className="text-xs text-blue-600">
+                ({activeFilter.conditions?.length || 0} condition{(activeFilter.conditions?.length || 0) !== 1 ? 's' : ''})
               </span>
             </div>
             <Button
@@ -282,11 +288,12 @@ const calculateTotalValue = () => {
           onAction={handleAddDeal}
         />
       ) : (
-        <DealPipeline
+<DealPipeline
           deals={filteredDeals}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
-onDrop={handleDrop}
+          onDrop={handleDrop}
+          onEdit={handleEditDeal}
         />
       )}
 
