@@ -19,6 +19,27 @@ const Deals = () => {
   const [editingDeal, setEditingDeal] = useState(null);
   const [draggedDeal, setDraggedDeal] = useState(null);
 
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape' && showForm) {
+        setShowForm(false);
+        setEditingDeal(null);
+      }
+    };
+
+    if (showForm) {
+      document.addEventListener('keydown', handleEscKey);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+      document.body.style.overflow = 'unset';
+    };
+  }, [showForm]);
   const loadDeals = async () => {
     try {
       setLoading(true);
@@ -60,6 +81,17 @@ const handleSaveDeal = async (dealData) => {
     }
     setShowForm(false);
     setEditingDeal(null);
+  };
+
+  const handleModalClose = () => {
+    setShowForm(false);
+    setEditingDeal(null);
+  };
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleModalClose();
+    }
   };
 
   const handleDragStart = (e, deal) => {
@@ -113,19 +145,6 @@ const handleSaveDeal = async (dealData) => {
     );
   }
 
-  if (showForm) {
-    return (
-      <DealForm
-        deal={editingDeal}
-        contacts={contacts}
-        onSave={handleSaveDeal}
-        onCancel={() => {
-          setShowForm(false);
-          setEditingDeal(null);
-        }}
-      />
-    );
-  }
 
   return (
     <div className="space-y-6">
@@ -160,7 +179,27 @@ const handleSaveDeal = async (dealData) => {
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-        />
+/>
+      )}
+
+      {/* Deal Form Modal */}
+      {showForm && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={handleBackdropClick}
+        >
+          <div 
+            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <DealForm
+              deal={editingDeal}
+              contacts={contacts}
+              onSave={handleSaveDeal}
+              onCancel={handleModalClose}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
