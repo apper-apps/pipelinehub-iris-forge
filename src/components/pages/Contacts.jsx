@@ -3,6 +3,7 @@ import ContactTable from "@/components/organisms/ContactTable";
 import ContactForm from "@/components/organisms/ContactForm";
 import FilterBuilder from "@/components/organisms/FilterBuilder";
 import SavedFilters from "@/components/organisms/SavedFilters";
+import ExportDialog from "@/components/organisms/ExportDialog";
 import SearchBar from "@/components/molecules/SearchBar";
 import Button from "@/components/atoms/Button";
 import Loading from "@/components/ui/Loading";
@@ -23,6 +24,7 @@ const Contacts = () => {
   const [selectedContact, setSelectedContact] = useState(null);
   const [showFilterBuilder, setShowFilterBuilder] = useState(false);
   const [showSavedFilters, setShowSavedFilters] = useState(false);
+  const [showExportDialog, setShowExportDialog] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
 
   const loadContacts = async () => {
@@ -208,7 +210,11 @@ return (
                 Clear Filter
               </Button>
             )}
-            <Button variant="outline" size="sm">
+<Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setShowExportDialog(true)}
+            >
               <ApperIcon name="Download" size={16} className="mr-2" />
               Export
             </Button>
@@ -311,7 +317,18 @@ return (
               />
             </div>
           </div>
-        </div>
+</div>
+      )}
+
+      {/* Export Dialog */}
+      {showExportDialog && (
+        <ExportDialog
+          isOpen={showExportDialog}
+          onClose={() => setShowExportDialog(false)}
+          data={filteredContacts}
+          dataType="contacts"
+          title="Export Contacts"
+        />
       )}
     </>
   );

@@ -8,6 +8,7 @@ import DealPipeline from "@/components/organisms/DealPipeline";
 import FilterBuilder from "@/components/organisms/FilterBuilder";
 import DealForm from "@/components/organisms/DealForm";
 import SavedFilters from "@/components/organisms/SavedFilters";
+import ExportDialog from "@/components/organisms/ExportDialog";
 import Button from "@/components/atoms/Button";
 import { dealService } from "@/services/api/dealService";
 import { contactService } from "@/services/api/contactService";
@@ -22,6 +23,7 @@ const Deals = () => {
   const [draggedDeal, setDraggedDeal] = useState(null);
   const [showFilterBuilder, setShowFilterBuilder] = useState(false);
   const [showSavedFilters, setShowSavedFilters] = useState(false);
+  const [showExportDialog, setShowExportDialog] = useState(false);
   const [activeFilter, setActiveFilter] = useState(null);
 
   // Handle ESC key to close modal
@@ -247,9 +249,17 @@ const calculateTotalValue = () => {
               className="text-red-600 hover:text-red-700"
             >
               <ApperIcon name="X" size={16} className="mr-2" />
-              Clear Filter
+Clear Filter
             </Button>
-)}
+          )}
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => setShowExportDialog(true)}
+          >
+            <ApperIcon name="Download" size={16} className="mr-2" />
+            Export
+          </Button>
         </div>
 
         {/* Active Filter Display */}
@@ -352,6 +362,17 @@ const calculateTotalValue = () => {
             </div>
 </div>
         </div>
+      )}
+
+      {/* Export Dialog */}
+      {showExportDialog && (
+        <ExportDialog
+          isOpen={showExportDialog}
+          onClose={() => setShowExportDialog(false)}
+          data={filteredDeals}
+          dataType="deals"
+          title="Export Deals"
+        />
       )}
     </div>
   );
