@@ -65,20 +65,16 @@ const Contacts = () => {
     setSelectedContact(contact);
   };
 
-  const handleSaveContact = async (contactData) => {
-    try {
-      if (editingContact) {
-        const updatedContact = await contactService.update(editingContact.Id, contactData);
-        setContacts(prev => prev.map(c => c.Id === updatedContact.Id ? updatedContact : c));
-      } else {
-        const newContact = await contactService.create(contactData);
-        setContacts(prev => [...prev, newContact]);
-      }
-      setShowForm(false);
-      setEditingContact(null);
-    } catch (err) {
-      throw err;
+const handleSaveContact = async (contactData) => {
+    if (editingContact) {
+      const updatedContact = await contactService.update(editingContact.Id, contactData);
+      setContacts(prev => prev.map(c => c.Id === updatedContact.Id ? updatedContact : c));
+    } else {
+      const newContact = await contactService.create(contactData);
+      setContacts(prev => [...prev, newContact]);
     }
+    setShowForm(false);
+    setEditingContact(null);
   };
 
   const handleDeleteContact = async (contactId) => {

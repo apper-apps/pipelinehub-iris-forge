@@ -51,20 +51,16 @@ const Tasks = () => {
     setShowForm(true);
   };
 
-  const handleSaveTask = async (taskData) => {
-    try {
-      if (editingTask) {
-        const updatedTask = await taskService.update(editingTask.Id, taskData);
-        setTasks(prev => prev.map(t => t.Id === updatedTask.Id ? updatedTask : t));
-      } else {
-        const newTask = await taskService.create(taskData);
-        setTasks(prev => [...prev, newTask]);
-      }
-      setShowForm(false);
-      setEditingTask(null);
-    } catch (err) {
-      throw err;
+const handleSaveTask = async (taskData) => {
+    if (editingTask) {
+      const updatedTask = await taskService.update(editingTask.Id, taskData);
+      setTasks(prev => prev.map(t => t.Id === updatedTask.Id ? updatedTask : t));
+    } else {
+      const newTask = await taskService.create(taskData);
+      setTasks(prev => [...prev, newTask]);
     }
+    setShowForm(false);
+    setEditingTask(null);
   };
 
   const handleToggleComplete = async (taskId) => {

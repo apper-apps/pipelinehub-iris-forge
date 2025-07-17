@@ -50,20 +50,16 @@ const Deals = () => {
     setShowForm(true);
   };
 
-  const handleSaveDeal = async (dealData) => {
-    try {
-      if (editingDeal) {
-        const updatedDeal = await dealService.update(editingDeal.Id, dealData);
-        setDeals(prev => prev.map(d => d.Id === updatedDeal.Id ? updatedDeal : d));
-      } else {
-        const newDeal = await dealService.create(dealData);
-        setDeals(prev => [...prev, newDeal]);
-      }
-      setShowForm(false);
-      setEditingDeal(null);
-    } catch (err) {
-      throw err;
+const handleSaveDeal = async (dealData) => {
+    if (editingDeal) {
+      const updatedDeal = await dealService.update(editingDeal.Id, dealData);
+      setDeals(prev => prev.map(d => d.Id === updatedDeal.Id ? updatedDeal : d));
+    } else {
+      const newDeal = await dealService.create(dealData);
+      setDeals(prev => [...prev, newDeal]);
     }
+    setShowForm(false);
+    setEditingDeal(null);
   };
 
   const handleDragStart = (e, deal) => {
