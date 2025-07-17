@@ -51,9 +51,9 @@ const Deals = () => {
       setError("");
       const [dealsData, contactsData] = await Promise.all([
         dealService.getAll(),
-        contactService.getAll(),
+contactService.getAll(),
       ]);
-setDeals(dealsData);
+      setDeals(dealsData);
       setFilteredDeals(dealsData);
       setContacts(contactsData);
     } catch (err) {
@@ -142,7 +142,6 @@ const handleSaveDeal = async (dealData) => {
       setDraggedDeal(null);
       return;
     }
-
 try {
       await dealService.updateStage(draggedDeal.Id, newStage);
       setDeals(prev => prev.map(deal => 
@@ -216,8 +215,8 @@ const calculateTotalValue = () => {
               minimumFractionDigits: 0,
             }).format(calculateTotalValue())}
           </p>
-        </div>
-<Button onClick={handleAddDeal}>
+</div>
+        <Button onClick={handleAddDeal}>
           <ApperIcon name="Plus" size={16} className="mr-2" />
           Add Deal
         </Button>
@@ -250,20 +249,19 @@ const calculateTotalValue = () => {
               <ApperIcon name="X" size={16} className="mr-2" />
               Clear Filter
             </Button>
-          )}
+)}
         </div>
-      </div>
 
-      {/* Active Filter Display */}
+        {/* Active Filter Display */}
       {activeFilter && (
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <ApperIcon name="Filter" size={16} className="text-blue-600" />
-              <span className="text-sm font-medium text-blue-800">
+<span className="text-sm font-medium text-blue-800">
                 Active Filter: {activeFilter.name || 'Custom Filter'}
               </span>
-<span className="text-xs text-blue-600">
+              <span className="text-xs text-blue-600">
                 ({activeFilter.conditions?.length || 0} condition{(activeFilter.conditions?.length || 0) !== 1 ? 's' : ''})
               </span>
             </div>
@@ -287,8 +285,8 @@ const calculateTotalValue = () => {
           actionLabel="Add Deal"
           onAction={handleAddDeal}
         />
-      ) : (
-<DealPipeline
+) : (
+        <DealPipeline
           deals={filteredDeals}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
@@ -313,9 +311,9 @@ const calculateTotalValue = () => {
               onSave={handleSaveDeal}
               onCancel={handleModalClose}
             />
-          </div>
+</div>
         </div>
-)}
+      )}
 
       {/* Filter Builder Modal */}
       {showFilterBuilder && (
@@ -352,9 +350,9 @@ const calculateTotalValue = () => {
                 onApply={handleApplyFilter}
               />
             </div>
-          </div>
+</div>
         </div>
-)}
+      )}
     </div>
   );
 };
