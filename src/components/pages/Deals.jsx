@@ -217,11 +217,11 @@ const calculateTotalValue = () => {
             }).format(calculateTotalValue())}
           </p>
         </div>
-        <Button onClick={handleAddDeal}>
+<Button onClick={handleAddDeal}>
           <ApperIcon name="Plus" size={16} className="mr-2" />
           Add Deal
         </Button>
-</div>
+      </div>
         
       <div className="flex items-center space-x-4">
         <Button
